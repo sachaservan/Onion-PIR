@@ -61,8 +61,7 @@ void eval_encrypted_waksman_network(vector<Ciphertext>::iterator input,
         vector<GSWCiphertext>::iterator swapbits, int length,
         shared_ptr<SEALContext> context, int l,const int base_bit, Evaluator &eval);
 
-void
-mux_inplace(Ciphertext &sample_c0, Ciphertext &sample_c1, GSWCiphertext choice_bit, shared_ptr<SEALContext> context,
+void mux_inplace(Ciphertext &sample_c0, Ciphertext &sample_c1, GSWCiphertext choice_bit, shared_ptr<SEALContext> context,
             const int l, const int base_bit, Evaluator &eval);
 
 
