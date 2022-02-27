@@ -336,16 +336,16 @@ string serialize_enc_sk(GSWCiphertext c) {
 }
 
 GSWCiphertext deserialize_enc_sk(shared_ptr<SEALContext> context, uint32_t len, string s) {
-    GSWCiphertext c;
+    GSWCiphertext gsw;
 
     istringstream data_stream(s);
     for (uint32_t i = 0; i < len_d1; i++) {
-        GSWCiphertext gsw;
-        gsw.load(context, data_stream);
-        c.push_back(gsw);
+        Ciphertext c;
+        c.load(context, data_stream);
+        gsw.push_back(c);
     }
-    
-    return c;
+
+    return gsw;
 }
 
 
