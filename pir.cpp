@@ -357,6 +357,6 @@ string serialize_galoiskeys(GaloisKeys g) {
 GaloisKeys deserialize_galoiskeys(shared_ptr<SEALContext> context, string s) {
     GaloisKeys g;
     std::stringstream parms_stream;
-    g.load(*context.get(), input);
+    g.load(*context.get(), parms_stream);
     return g;
 }
