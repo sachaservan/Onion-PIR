@@ -279,8 +279,71 @@ mux_inplace(Ciphertext &sample_c0, Ciphertext &sample_c1, GSWCiphertext choice_b
 
         // c1' = c0+c1-c0' = temp_add - sample_c0
         eval.sub(temp_add, sample_c0, sample_c1);
+}
+
+inline Ciphertext deserialize_ciphertext(string s) {
+    Ciphertext c;
+    std::istringstream input(s);
+    c.unsafe_load(input);
+    return c;
+}
 
 
+GSWCiphertext deserialize_ciphertexts(uint32_t count, string s, uint32_t len_ciphertext) {
+    GSWCiphertext c;
+    for (uint32_t i = 0; i < count; i++) {
+        c.push_back(deserialize_ciphertext(s.substr(i * len_ciphertext, len_ciphertext)));
+    }
+    return c;
+}
+
+PirQuery deserialize_query(uint32_t d, uint32_t count, string s, uint32_t len_ciphertext) {
+    vector<GSWCiphertext> c;
+    for (uint32_t i = 0; i < d; i++) {
+        c.push_back(deserialize_ciphertexts(
+              count, 
+              s.substr(i * count * len_ciphertext, count * len_ciphertext),
+              len_ciphertext)
+        );
+    }
+    return c;
+}
 
 
+inline string serialize_ciphertext(Ciphertext c) {
+    std::ostringstream output;
+    c.save(output);
+    return output.str();
+}
+
+string serialize_ciphertexts(GSWCiphertext c) {
+    string s;
+    for (uint32_t i = 0; i < c.size(); i++) {
+        s.append(serialize_ciphertext(c[i]));
+    }
+    return s;
+}
+
+string serialize_query(vector<GSWCiphertext> c) {
+    string s;
+    for (uint32_t i = 0; i < c.size(); i++) {
+      for (uint32_t j = 0; j < c[i].size(); j++) {
+        s.append(serialize_ciphertext(c[i][j]));
+      }
+    }
+    return s;
+}
+
+
+string serialize_galoiskeys(GaloisKeys g) {
+    std::ostringstream output;
+    g.save(output);
+    return output.str();
+}
+
+GaloisKeys *deserialize_galoiskeys(string s) {
+    GaloisKeys *g = new GaloisKeys();
+    std::istringstream input(s);
+    g->unsafe_load(input);
+    return g;
 }
