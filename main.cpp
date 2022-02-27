@@ -110,7 +110,7 @@ int main(){
     GSWCiphertext enc_sk = client.get_enc_sk();
     string enc_sk_ser = serialize_enc_sk(enc_sk);
 
-    enc_sk = deserialize_enc_sk(context, enc_sk_ser, enc_sk.size());
+    enc_sk = deserialize_enc_sk(context, enc_sk.size(), enc_sk_ser);
     server.set_enc_sk(enc_sk);
 
     auto time_server_s = high_resolution_clock::now();
