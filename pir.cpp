@@ -339,7 +339,7 @@ GSWCiphertext deserialize_enc_sk(shared_ptr<SEALContext> context, uint32_t len, 
     GSWCiphertext gsw;
 
     istringstream data_stream(s);
-    for (uint32_t i = 0; i < len_d1; i++) {
+    for (uint32_t i = 0; i < len; i++) {
         Ciphertext c;
         c.load(context, data_stream);
         gsw.push_back(c);
