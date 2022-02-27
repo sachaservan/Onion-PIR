@@ -64,5 +64,11 @@ void eval_encrypted_waksman_network(vector<Ciphertext>::iterator input,
 void mux_inplace(Ciphertext &sample_c0, Ciphertext &sample_c1, GSWCiphertext choice_bit, shared_ptr<SEALContext> context,
             const int l, const int base_bit, Evaluator &eval);
 
+// serialization 
+GaloisKeys deserialize_galoiskeys(shared_ptr<SEALContext> context, string s);
+string serialize_galoiskeys(GaloisKeys g);
+EncryptionParameters deserialize_params(string s);
+string serialize_params(EncryptionParameters parms);
+
 
 #endif //EXTERNAL_PROD_PIR_H

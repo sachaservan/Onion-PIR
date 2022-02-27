@@ -72,7 +72,7 @@ int main(){
 
     // test serialization/deserialization of galois keys
     string ser_gal = serialize_galoiskeys(galois_keys);
-    galois_keys = deserialize_galoiskeys(context, string s);
+    galois_keys = deserialize_galoiskeys(context, ser_gal);
 
     cout << "Main: Setting Galois keys...";
     server.set_galois_key(0, galois_keys);
