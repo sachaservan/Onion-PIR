@@ -283,8 +283,8 @@ mux_inplace(Ciphertext &sample_c0, Ciphertext &sample_c1, GSWCiphertext choice_b
 
 inline Ciphertext deserialize_ciphertext(shared_ptr<SEALContext> context, string s) {
     Ciphertext c;
-    std::stringstream input(s);
-    c.load(*context.get(), input);
+    std::istringstream input(s);
+    c.load(context, input);
     return c;
 }
 
@@ -357,6 +357,6 @@ string serialize_galoiskeys(GaloisKeys g) {
 GaloisKeys deserialize_galoiskeys(shared_ptr<SEALContext> context, string s) {
     GaloisKeys g;
     std::stringstream parms_stream;
-    g.load(*context.get(). input);
+    g.load(*context.get(), input);
     return g;
 }
