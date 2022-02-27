@@ -65,10 +65,14 @@ void mux_inplace(Ciphertext &sample_c0, Ciphertext &sample_c1, GSWCiphertext cho
             const int l, const int base_bit, Evaluator &eval);
 
 // serialization 
-GaloisKeys deserialize_galoiskeys(shared_ptr<SEALContext> context, string s);
+string serialize_query(vector<GSWCiphertext> c);
+string serialize_ciphertexts(GSWCiphertext c);
 string serialize_galoiskeys(GaloisKeys g);
-EncryptionParameters deserialize_params(string s);
 string serialize_params(EncryptionParameters parms);
 
+PirQuery deserialize_query(shared_ptr<SEALContext> context, uint32_t d, uint32_t count, string s, uint32_t len_ciphertext);
+GSWCiphertext deserialize_ciphertexts(shared_ptr<SEALContext> context, uint32_t count, string s, uint32_t len_ciphertext);
+GaloisKeys deserialize_galoiskeys(shared_ptr<SEALContext> context, string s);
+EncryptionParameters deserialize_params(string s);
 
 #endif //EXTERNAL_PROD_PIR_H

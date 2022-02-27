@@ -281,6 +281,14 @@ mux_inplace(Ciphertext &sample_c0, Ciphertext &sample_c1, GSWCiphertext choice_b
         eval.sub(temp_add, sample_c0, sample_c1);
 }
 
+// Serialization 
+
+inline string serialize_ciphertext(Ciphertext c) {
+    std::stringstream output;
+    c.save(output);
+    return output.str();
+}
+
 inline Ciphertext deserialize_ciphertext(shared_ptr<SEALContext> context, string s) {
     Ciphertext c;
     std::istringstream input(s);
@@ -307,13 +315,6 @@ PirQuery deserialize_query(shared_ptr<SEALContext> context, uint32_t d, uint32_t
         );
     }
     return c;
-}
-
-
-inline string serialize_ciphertext(Ciphertext c) {
-    std::stringstream output;
-    c.save(output);
-    return output.str();
 }
 
 string serialize_ciphertexts(GSWCiphertext c) {
