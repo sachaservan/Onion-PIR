@@ -65,10 +65,12 @@ void mux_inplace(Ciphertext &sample_c0, Ciphertext &sample_c1, GSWCiphertext cho
             const int l, const int base_bit, Evaluator &eval);
 
 // serialization 
+string serialize_enc_sk(GSWCiphertext c);
 string serialize_query(vector<GSWCiphertext> c);
 string serialize_galoiskeys(GaloisKeys g);
 string serialize_params(EncryptionParameters parms);
 
+GSWCiphertext deserialize_enc_sk(shared_ptr<SEALContext> context, uint32_t len, string s);
 PirQuery deserialize_query(shared_ptr<SEALContext> context, uint32_t len_d1, uint32_t len_d2, string s);
 GaloisKeys deserialize_galoiskeys(shared_ptr<SEALContext> context, string s);
 EncryptionParameters deserialize_params(string s);

@@ -327,6 +327,27 @@ EncryptionParameters deserialize_params(string s) {
     return parms;
 }
 
+string serialize_enc_sk(GSWCiphertext c) {
+    stringstream data_stream;
+    for (uint32_t i = 0; i < c.size(); i++) {
+        c[i].save(data_stream);
+    }
+    return data_stream.str();
+}
+
+GSWCiphertext deserialize_enc_sk(shared_ptr<SEALContext> context, uint32_t len, string s) {
+    GSWCiphertext c;
+
+    istringstream data_stream(s);
+    for (uint32_t i = 0; i < len_d1; i++) {
+        GSWCiphertext gsw;
+        gsw.load(context, data_stream);
+        c.push_back(gsw);
+    }
+    
+    return c;
+}
+
 
 string serialize_galoiskeys(GaloisKeys g) {
     std::stringstream output;
