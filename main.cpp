@@ -64,7 +64,7 @@ int main(){
 
     // test serialization/deserialization of parms
     string ser_parms = serialize_params(parms);
-    parms = deserialize_parms(ser_parms);
+    parms = deserialize_params(ser_parms);
 
     // Initialize PIR client....
     pir_client client(parms, pir_params);
