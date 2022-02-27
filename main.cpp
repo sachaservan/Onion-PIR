@@ -96,7 +96,7 @@ int main(){
 
     uint32_t d1 = query.size();
     uint32_t d2 = query[0].size();
-    string query_ser serialize_query(query);
+    string query_ser = serialize_query(query);
     query = deserialize_query(context, d1, d2, query_ser);
 
     cout<<"Main: query size = "<< query.size()<< endl;
