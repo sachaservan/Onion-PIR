@@ -286,9 +286,11 @@ mux_inplace(Ciphertext &sample_c0, Ciphertext &sample_c1, GSWCiphertext choice_b
 PirQuery deserialize_query(shared_ptr<SEALContext> context, uint32_t len_d1, uint32_t len_d2, string s) {
     vector<GSWCiphertext> c;
     for (uint32_t i = 0; i < len_d1; i++) {
+      GSWCiphertext gsw;
+      c.push_back(gsw);
       for (uint32_t j = 0; j < len_d2; j++) {
         Ciphertext ct;
-        c.push_back(ct);
+        c[i].push_back(ct);
       }
     }
 
