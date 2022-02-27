@@ -283,56 +283,33 @@ mux_inplace(Ciphertext &sample_c0, Ciphertext &sample_c1, GSWCiphertext choice_b
 
 // Serialization 
 
-inline string serialize_ciphertext(Ciphertext c) {
-    std::stringstream output;
-    c.save(output);
-    return output.str();
-}
-
-inline Ciphertext deserialize_ciphertext(shared_ptr<SEALContext> context, string s) {
-    Ciphertext c;
-    std::istringstream input(s);
-    c.load(context, input);
-    return c;
-}
-
-GSWCiphertext deserialize_ciphertexts(shared_ptr<SEALContext> context, uint32_t count, string s, uint32_t len_ciphertext) {
-    GSWCiphertext c;
-    for (uint32_t i = 0; i < count; i++) {
-        c.push_back(deserialize_ciphertext(context, s.substr(i * len_ciphertext, len_ciphertext)));
-    }
-    return c;
-}
-
-PirQuery deserialize_query(shared_ptr<SEALContext> context, uint32_t d, uint32_t count, string s, uint32_t len_ciphertext) {
+PirQuery deserialize_query(shared_ptr<SEALContext> context, uint32_t len_d1, uint32_t len_d2, string s);
     vector<GSWCiphertext> c;
-    for (uint32_t i = 0; i < d; i++) {
-        c.push_back(deserialize_ciphertexts(
-              context,
-              count, 
-              s.substr(i * count * len_ciphertext, count * len_ciphertext),
-              len_ciphertext)
-        );
-    }
-    return c;
-}
-
-string serialize_ciphertexts(GSWCiphertext c) {
-    string s;
-    for (uint32_t i = 0; i < c.size(); i++) {
-        s.append(serialize_ciphertext(c[i]));
-    }
-    return s;
-}
-
-string serialize_query(vector<GSWCiphertext> c) {
-    string s;
-    for (uint32_t i = 0; i < c.size(); i++) {
-      for (uint32_t j = 0; j < c[i].size(); j++) {
-        s.append(serialize_ciphertext(c[i][j]));
+    for (uint32_t i = 0; i < len_d1; i++) {
+      for (uint32_t j = 0; j < len_d2; j++) {
+        Ciphertext ct;
+        c.push_back(ct);
       }
     }
-    return s;
+
+    istringstream data_stream(s);
+    for (uint32_t i = 0; i < len_d1; i++) {
+      for (uint32_t j = 0; j < len_d2; j++) {
+        c[i][j].load(context, data_stream);
+      }
+    }
+    return c;
+}
+
+
+string serialize_query(vector<GSWCiphertext> c) {
+    stringstream data_stream;
+    for (uint32_t i = 0; i < c.size(); i++) {
+      for (uint32_t j = 0; j < c[i].size(); j++) {
+        c[i][j].save(data_stream);
+      }
+    }
+    return data_stream.str();
 }
 
 string serialize_params(EncryptionParameters parms) {

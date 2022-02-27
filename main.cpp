@@ -94,6 +94,11 @@ int main(){
     auto time_query_s = high_resolution_clock::now();
     PirQuery query = client.generate_query_combined(index);
 
+    uint32_t d1 = query.size();
+    uint32_t d2 = query[0].size();
+    string query_ser serialize_query(query);
+    query = deserialize_query(context, d1, d2, string s);
+
     cout<<"Main: query size = "<< query.size()<< endl;
 
     auto time_query_e = high_resolution_clock::now();
